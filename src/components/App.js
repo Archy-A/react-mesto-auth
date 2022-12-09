@@ -4,7 +4,9 @@ import React, { useEffect, useState } from 'react';
 
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
+import { withRouter } from 'react-router-dom'; 
 
+import * as auth from "./auth/Auth"
 import Header from './header/Header';
 import Main from './main/Main';
 import Footer from './footer/Footer';
@@ -28,7 +30,7 @@ import { CardDeleteContext } from '../contexts/CardDeleteContext';
 
 const alertMessage = 'Уууупс... что-то произошло на сервере, попробуй чуть позже. Код ошибки:';
 
-function App() {
+function App(props) {
   document.body.style = 'background: black;';
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -43,8 +45,6 @@ function App() {
 
   const [loggedIn, setLoggedIn ] = useState(false);
   const [email, setEmail ] = useState('');
-
-  // const navigate = useNavigate();
 
   function getCardsFromServer() {
     return api.getInitialCards()
@@ -92,6 +92,31 @@ function handleDeleteConfirmation (card, e) {
   e.stopPropagation();
 } 
 
+//=====================================================
+function tokenCheck () {
+  const jwt = localStorage.getItem('token');
+  console.log('111 token =', jwt)
+  if (jwt){
+    auth.getContent(jwt).then((res) => {
+      if (res){
+        setEmail(res.data.email);
+        setLoggedIn(true);
+        }
+      });
+  }
+}
+
+useEffect(() => {
+  tokenCheck();
+}, []);
+
+useEffect(() => {
+  if (loggedIn) {
+    props.history.push("/");
+  }
+}, [loggedIn, props.history])
+//======================================================
+
   useEffect(() => {
     api.getUserInfo()
     .then(data => {
@@ -102,6 +127,8 @@ function handleDeleteConfirmation (card, e) {
       window.alert(`${alertMessage} ${err}`);
     })
   }, []);
+
+
 
   useEffect(() => {
     getCardsFromServer();
@@ -169,7 +196,7 @@ function handleDeleteConfirmation (card, e) {
   }
 
   return (
-  <BrowserRouter>
+  // <BrowserRouter>
     <div className="App">
       <div className="root">
         <div className="wrapper">
@@ -260,8 +287,8 @@ function handleDeleteConfirmation (card, e) {
         </div>
       </div>
    </div>
-</BrowserRouter>
+// </BrowserRouter>
   );
 }
 
-export default App;
+export default withRouter(App);

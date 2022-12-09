@@ -29,7 +29,25 @@ export const sigin = (email, password) => {
     return response.json();
   })
   .then((res) => {
-    localStorage.setItem('token', res.token);;
+    const jwti = localStorage.getItem('token');
+    if (res.token){
+      localStorage.setItem('token', res.token);
+      return res;
+    } else {
+      return;
+    }
   })
   .catch((err) => console.log(err));
 }; 
+
+export const getContent = (token) => {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    }
+  })
+  .then(res => res.json())
+  .then(data => data)
+} 
