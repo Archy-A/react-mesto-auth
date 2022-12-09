@@ -8,7 +8,7 @@ function PopupWithForm({
                          name,
                          nameForm,
                          buttonLabel,
-                         children
+                         children,
                       }) {
 
   return (
@@ -19,11 +19,10 @@ function PopupWithForm({
         <form onSubmit={onSubmit} method="post" name={nameForm} className={`popup__form ${nameForm}`} noValidate>
           <h2 className="popup__header">{title}</h2>
             {children}
-          <button type="submit" className="popup__save" >{buttonLabel}</button>
+          <button type="submit" className="popup__save">{buttonLabel}</button>
         </form>
       </div>
     </div>
-    
   );
 }
 

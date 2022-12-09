@@ -2,13 +2,15 @@
   box-sizing: content-box;
   margin: 0;
   padding-top: 0;
-  max-width: 142px;
+  min-width: 142px;
   min-height: 33px;
   background-image: url("../../../images/Mesto.svg");
   background-repeat: no-repeat;
   background-size: cover;
   transform: scale(1.08);
   margin-bottom: 41px;
+
+  /* border: 1px rgb(235, 14, 14) solid; */
   }
 
 @media screen and (max-width: 700px) {

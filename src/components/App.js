@@ -14,9 +14,10 @@ import EditProfilePopup from './edit_profile_popup/EditProfilePopup';
 import EditAvatarPopup from './edit_avatar_popup/EditAvatarPopup.js';
 import AddPlacePopup from './add_place_popup/AddPlacePopup';
 
-import Login from './Login';
+import Login from './login/Login';
 import Register from './register/Register';
-import ProtectedRoute from "./ProtectedRoute";
+import InfoTooltip from './info_tooltip/InfoTooltip';
+import ProtectedRoute from "./protected_route/ProtectedRoute";
 
 import ImagePopup from './image_popup/ImagePopup';
 import api from '../utils/Api'
@@ -34,12 +35,14 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isCardRemoveConfirmationPopup, setIsCardRemoveConfirmationPopup] = useState(false);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(true);
   const [cards, setCards ] = useState([]);
   const [card, setCard ] = useState([]);
   const [selectedCard, setSelectedCard ] = useState(null);
   const [currentUser, setCurrentUser] = useState([]);
 
   const [loggedIn, setLoggedIn ] = useState(false);
+  const [email, setEmail ] = useState('');
 
   // const navigate = useNavigate();
 
@@ -175,40 +178,41 @@ function handleDeleteConfirmation (card, e) {
         <CardContext.Provider value={cards}>
         <CardDeleteContext.Provider value={card}>
 
-          <Header/>
+          <Header
+            loggedIn={loggedIn}
+            email={email}
+            setLoggedIn={setLoggedIn}
+          />
 
           <Switch>
 
             <ProtectedRoute
-              path="/"
+              exact path="/"
               loggedIn={loggedIn}
               component={Main}
+              onEditProfile={handleEditProfileClick}
+              onAddPlace={handleAddPlaceClick}
+              onEditAvatar={handleEditAvatarClick}
+              handleCardClick={handleCardClick}
+              onCardLike={handleCardLike}
+              cards={cards}
+              onDeleteConfirmation={handleDeleteConfirmation}
             />
 
-            <Route  path="/sign-up">
+            <Route exact path="/sign-up">
               <Register/>
             </Route>
 
-            <Route  path="/login"> 
-              <Login/> 
+            <Route exact path="/sign-in"> 
+              <Login 
+                setLoggedIn={setLoggedIn}
+                setEmail={setEmail}
+              /> 
             </Route>
 
-            <Route exact path="/">
-              {loggedIn ? <Redirect to="/" /> : <Redirect to="/login" />}
+            <Route>
+              {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
             </Route>
-
-            {/* <Route exact path="/">
-             {loggedIn ?
-              <Main
-                onEditProfile={handleEditProfileClick}
-                onAddPlace={handleAddPlaceClick}
-                onEditAvatar={handleEditAvatarClick}
-                handleCardClick={handleCardClick}
-                onCardLike={handleCardLike}
-                cards={cards}
-                onDeleteConfirmation={handleDeleteConfirmation}/>
-                : <Redirect to="/login"/>}
-            </Route> */}
 
           </Switch> 
 
@@ -227,10 +231,15 @@ function handleDeleteConfirmation (card, e) {
           />
 
           <EditAvatarPopup 
-            isOpen={isEditAvatarPopupOpen} 
-            onClose={closeAllPopups} 
-            onUpdateAvatar={handleUpdateAvatar}
+              isOpen={isEditAvatarPopupOpen} 
+              onClose={closeAllPopups} 
+              onUpdateAvatar={handleUpdateAvatar}
           />
+
+          {/* <InfoTooltip 
+              isOpen={isInfoTooltipOpen} 
+              onClose={closeAllPopups} 
+          /> */}
 
          <CardRemoveConfirmationPopup 
               isOpen={isCardRemoveConfirmationPopup} 

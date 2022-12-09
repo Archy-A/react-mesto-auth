@@ -4,7 +4,10 @@
 @import url(../src/blocks/wrapper/wrapper.css);
 
 @import url(../src/blocks/header/header.css);
+@import url(../src/blocks/header/__email/header__email.css);
+@import url(../src/blocks/header/__exit/header__exit.css);
 @import url(../src/blocks/header/__logo/header__logo.css);
+@import url(../src/blocks/header/__container/header__container.css);
 
 @import url(../src/blocks/profile/profile.css);
 @import url(../src/blocks/profile/__info/profile__info.css);
@@ -37,6 +40,7 @@
 @import url(../src/blocks/popup/__container/popup__container.css);
 @import url(../src/blocks/popup/__form/popup__form.css);
 @import url(../src/blocks/popup/__edit/popup__edit.css);
+@import url(../src/blocks/popup/__confirm-message/popup__confirm-message.css);
 @import url(../src/blocks/popup/__header/popup__header.css);
 @import url(../src/blocks/popup/__save/popup__save.css);
 @import url(../src/blocks/popup-add/popup-add.css);
@@ -48,6 +52,7 @@
 @import url(../src/blocks/popup/__edit-error/popup__edit-error.css);
 @import url(../src/blocks/popup/__save/__save-inactive/popup__save-inactive.css);
 @import url(../src/blocks/popup/__input-error/popup__input-error.css);
+@import url(../src/blocks/popup-tooltip/popup-tooltip.css);
 
 @import url(../src/blocks/popup-delete/popup-delete.css);
 @import url(../src/blocks/popup-ava/popup-ava.css);
@@ -61,3 +66,7 @@
 @import url(../src/blocks/login/__redirect/login__redirect.css);
 @import url(../src/blocks/login/__register/login__register.css);
 @import url(../src/blocks/login/__line/login__line.css);
+
+@import url(../src/blocks/confirm-logo/confirm-logo.css);
+
+@import url(../src/blocks/element-hidden/element-hidden.css);
