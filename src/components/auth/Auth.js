@@ -29,7 +29,6 @@ export const sigin = (email, password) => {
     return response.json();
   })
   .then((res) => {
-    const jwti = localStorage.getItem('token');
     if (res.token){
       localStorage.setItem('token', res.token);
       return res;

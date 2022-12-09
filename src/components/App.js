@@ -95,7 +95,6 @@ function handleDeleteConfirmation (card, e) {
 //=====================================================
 function tokenCheck () {
   const jwt = localStorage.getItem('token');
-  console.log('111 token =', jwt)
   if (jwt){
     auth.getContent(jwt).then((res) => {
       if (res){
