@@ -40,7 +40,7 @@ function Register(props) {
         </input>
         <div className="login__line"/>
         <button type="submit" className="login__register" >Зарегистрироваться</button>
-        <NavLink to="/login" className="login__redirect">Уже зарегистрированы? Войти</NavLink>
+        <NavLink to="/sign-in" className="login__redirect">Уже зарегистрированы? Войти</NavLink>
     </form>
   );
 }
