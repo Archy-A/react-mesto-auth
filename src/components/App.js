@@ -37,7 +37,7 @@ function App(props) {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isCardRemoveConfirmationPopup, setIsCardRemoveConfirmationPopup] = useState(false);
-  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(true);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [cards, setCards ] = useState([]);
   const [card, setCard ] = useState([]);
   const [selectedCard, setSelectedCard ] = useState(null);
@@ -45,6 +45,8 @@ function App(props) {
 
   const [loggedIn, setLoggedIn ] = useState(false);
   const [email, setEmail ] = useState('');
+  const [loginError, setLoginError ] = useState(false);
+  const [registerError, setRegisterError ] = useState(false);
 
   function getCardsFromServer() {
     return api.getInitialCards()
@@ -92,7 +94,6 @@ function handleDeleteConfirmation (card, e) {
   e.stopPropagation();
 } 
 
-//=====================================================
 function tokenCheck () {
   const jwt = localStorage.getItem('token');
   if (jwt){
@@ -114,7 +115,6 @@ useEffect(() => {
     props.history.push("/");
   }
 }, [loggedIn, props.history])
-//======================================================
 
   useEffect(() => {
     api.getUserInfo()
@@ -150,6 +150,7 @@ useEffect(() => {
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsCardRemoveConfirmationPopup(false);
+    setIsInfoTooltipOpen(false);
     setSelectedCard(null)
   }
 
@@ -195,7 +196,6 @@ useEffect(() => {
   }
 
   return (
-  // <BrowserRouter>
     <div className="App">
       <div className="root">
         <div className="wrapper">
@@ -226,13 +226,23 @@ useEffect(() => {
             />
 
             <Route exact path="/sign-up">
-              <Register/>
+              <Register
+                setIsInfoTooltipOpen={setIsInfoTooltipOpen}
+                closeAllPopups={closeAllPopups}
+                setRegisterError={setRegisterError}
+                setEmail={setEmail}
+                setLoggedIn={setLoggedIn}
+              />
             </Route>
 
             <Route exact path="/sign-in"> 
               <Login 
                 setLoggedIn={setLoggedIn}
                 setEmail={setEmail}
+                setIsInfoTooltipOpen={setIsInfoTooltipOpen}
+                closeAllPopups={closeAllPopups}
+                setLoginError={setLoginError}
+                
               /> 
             </Route>
 
@@ -262,10 +272,12 @@ useEffect(() => {
               onUpdateAvatar={handleUpdateAvatar}
           />
 
-          {/* <InfoTooltip 
+          <InfoTooltip 
               isOpen={isInfoTooltipOpen} 
               onClose={closeAllPopups} 
-          /> */}
+              loginError={loginError}
+              registerError={registerError}
+          />
 
          <CardRemoveConfirmationPopup 
               isOpen={isCardRemoveConfirmationPopup} 
@@ -286,7 +298,6 @@ useEffect(() => {
         </div>
       </div>
    </div>
-// </BrowserRouter>
   );
 }
 

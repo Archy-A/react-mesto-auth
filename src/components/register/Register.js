@@ -19,8 +19,20 @@ function Register(props) {
 
     function handleSubmit(e) {
       e.preventDefault();
-      auth.register(emailAndPassSetter.values[email], emailAndPassSetter.values[password]).then((res) => {
-        props.history.push('/sign-in');
+      auth.register(emailAndPassSetter.values[email], emailAndPassSetter.values[password])
+      .then((res) => {
+        if (res) {
+          props.setIsInfoTooltipOpen(true);
+          props.setRegisterError(false);
+          props.history.push('/sign-in');
+        }
+        else {
+          props.setLoggedIn(false);
+          props.setIsInfoTooltipOpen(true);
+          props.setRegisterError(true);
+          props.setEmail(emailAndPassSetter.values[email]);
+          props.history.push('/sign-up');
+        }
       })
       .catch((err) => {
         console.log(err);

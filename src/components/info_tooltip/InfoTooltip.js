@@ -1,9 +1,11 @@
 import React from 'react';
 
 function InfoTooltip({  
-                            isOpen,
-                            onClose,
-                        }) {
+                      isOpen,
+                      onClose,
+                      loginError,
+                      registerError
+                      }) {
 
   return (
 
@@ -11,8 +13,8 @@ function InfoTooltip({
       <div className="popup__container">
         <button type="button" onClick={onClose} className="popup__btn-close" aria-label="Крестик, закрыть окно редактирования"></button>
         <form className={`popup__form`} noValidate>
-          <div className="confirm-logo"/>
-              <h1 className="popup__confirm-message">Вы успешно зарегистрировались!</h1>
+          <div className={`${loginError || registerError ? 'error-logo' : 'confirm-logo'} `} ></div>
+              <h1 className="popup__confirm-message">{`${loginError || registerError ? 'Что-то пошло не так! Попробуйте еще раз.' : 'Вы успешно зарегистрировались!'}`}</h1>
         </form>
       </div>
     </div>

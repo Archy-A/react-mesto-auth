@@ -9,7 +9,12 @@ export const register = (email, password) => {
     body: JSON.stringify({email, password})
   })
   .then((response) => {
-    return response.json();
+    if (response.status == '201'){
+      return response.json();
+    }
+    else {
+      return
+     }
   })
   .then((res) => {
     return res;
@@ -26,14 +31,20 @@ export const sigin = (email, password) => {
     body: JSON.stringify({email, password})
   })
   .then((response) => {
-    return response.json();
+    if (response.status == '200'){
+      return response.json();
+    }
+    else {
+      return
+     }
   })
   .then((res) => {
     if (res.token){
       localStorage.setItem('token', res.token);
       return res;
     } else {
-      return;
+      console.log("message =", res.message)
+      return res;
     }
   })
   .catch((err) => console.log(err));

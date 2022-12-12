@@ -8,6 +8,9 @@ const alertMessage = 'Уууупс... что-то произошло на сер
 
 function Login(props) {
 
+  // setIsInfoTooltipOpen={setIsInfoTooltipOpen}
+  // closeAllPopups={closeAllPopups}
+
   const email = 'email';
   const password = 'password';
 
@@ -20,10 +23,19 @@ function Login(props) {
     function handleSubmit(e) {
       e.preventDefault();
       auth.sigin(emailAndPassSetter.values[email], emailAndPassSetter.values[password])
-      .then(() => {
-        props.setLoggedIn(true);
-        props.setEmail(emailAndPassSetter.values[email]);
-        props.history.push('/');
+      .then((res) => {
+        if (res) {
+          props.setLoggedIn(true);
+          props.setEmail(emailAndPassSetter.values[email]);
+          props.history.push('/');
+          props.setLoginError(false);
+        }
+        else {
+          props.setLoggedIn(false);
+          props.setIsInfoTooltipOpen(true);
+          props.setLoginError(true);
+          props.history.push('/sign-in');
+        }
       })
       .catch((err) => {
         console.log(err);
